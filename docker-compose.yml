@@ -10,9 +10,9 @@ volumes:
   nginx-logs:
   data:
 
-secrets:
-  backend_api_token:
-    file: ${BACKEND_SECRET_FILE:-./secrets/backend_api_token.example}
+#secrets:
+#  backend_api_token:
+#    file: ${BACKEND_SECRET_FILE:-./secrets/backend_api_token.example}
 
 services:
   frontend:
