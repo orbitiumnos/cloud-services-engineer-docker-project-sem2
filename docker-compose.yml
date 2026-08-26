@@ -72,7 +72,7 @@ services:
           cpus: "0.75"
           memory: 256M
         reservations:
-          cpus: "0.05"
+          cpus: "0.04"
           memory: 64M
     healthcheck:
       test:
