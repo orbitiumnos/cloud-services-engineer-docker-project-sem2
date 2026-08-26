@@ -16,8 +16,7 @@ RUN NODE_OPTIONS=--openssl-legacy-provider npm run build && rm -rf node_modules
 
 # NGINX
 
-#FROM alpine:3.22
-FROM nginx:1.29-alpine
+FROM nginx:1.30-alpine
 
 USER root
 
@@ -25,8 +24,8 @@ RUN apk upgrade --no-cache
 
 WORKDIR /usr/share/nginx/html
 
-COPY --from=builder --chown=101:101 /app/dist /usr/share/nginx/html/momo-store
-#./momo-store
+COPY --from=builder --chown=101:101 /app/dist ./momo-store
+#/usr/share/nginx/html/momo-store
 COPY --chown=101:101 nginx.conf /etc/nginx/conf.d/default.conf
 
 RUN chmod -R 755 /usr/share/nginx/html/momo-store

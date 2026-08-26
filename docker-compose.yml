@@ -27,8 +27,8 @@ services:
       TZ: ${TZ:-UTC}
     volumes:
       - frontend-html:/mnt
-#    ports:
-#      - "80:8080"
+    ports:
+      - "80:8080"
     networks:
       - momo-net
     read_only: true
@@ -77,61 +77,6 @@ services:
     healthcheck:
       test:
         ["CMD", "wget", "-q", "-O", "/dev/null", "http://127.0.0.1:8081/health"]
-      interval: 10s
-      timeout: 3s
-      retries: 5
-      start_period: 5s
-
-  nginx:
-    profiles:
-      - local
-    container_name: nginx
-    image: nginx:1.30.2-alpine3.23 #nginxinc/nginx-unprivileged:stable-alpine
-    environment:
-      TZ: ${TZ:-UTC}
-    ports:
-      - "${FRONTEND_PORT:-80}:80"
-    networks:
-      - momo-net
-    depends_on:
-      backend:
-        condition: service_healthy
-      frontend:
-        condition: service_completed_successfully
-    restart: unless-stopped
-    read_only: true
-    cap_drop:
-      - ALL
-    cap_add:
-      - NET_BIND_SERVICE
-    security_opt:
-      - no-new-privileges:true
-    tmpfs:
-      - /var/cache/nginx:rw,size=32m,uid=101,gid=101,mode=0770
-      - /tmp:rw,size=16m,uid=101,gid=101,mode=1777
-      - /var/run:size=8m,uid=101,gid=101,mode=0770
-    volumes:
-      - frontend-html:/usr/share/nginx/html:ro
-      - ./frontend/nginx/default.conf:/etc/nginx/conf.d/default.conf:ro
-      - nginx-logs:/var/log/nginx
-    deploy:
-      resources:
-        limits:
-          cpus: "0.50"
-          memory: 128M
-        reservations:
-          cpus: "0.05"
-          memory: 32M
-    healthcheck:
-      test:
-        [
-          "CMD",
-          "wget",
-          "-q",
-          "-O",
-          "/dev/null",
-          "http://127.0.0.1:80/momo-store/",
-        ]
       interval: 10s
       timeout: 3s
       retries: 5
