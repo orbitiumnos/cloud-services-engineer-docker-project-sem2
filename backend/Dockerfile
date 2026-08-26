@@ -24,6 +24,7 @@ RUN apk upgrade --no-cache \
     && addgroup -S app \
     && adduser -S -G app -H -h /nonexistent app \
     && apk add --no-cache ca-certificates \
+    && mkdir -p /app/data \
     && chown -R app:app /app
 
 WORKDIR /app
