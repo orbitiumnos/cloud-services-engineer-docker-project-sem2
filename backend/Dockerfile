@@ -38,4 +38,4 @@ HEALTHCHECK --interval=30s --timeout=3s --start-period=10s --retries=3 \
   CMD wget -q http://127.0.0.1:8081/health || exit 1
 # -O /dev/null
 
-ENTRYPOINT ["/app/momo-backend"]
+ENTRYPOINT ["/app/momo-store-api"]
