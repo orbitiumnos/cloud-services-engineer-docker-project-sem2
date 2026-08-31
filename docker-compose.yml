@@ -10,14 +10,10 @@ volumes:
   nginx-logs:
   data:
 
-#secrets:
-#  backend_api_token:
-#    file: ${BACKEND_SECRET_FILE:-./secrets/backend_api_token.example}
-
 services:
   frontend:
     container_name: frontend
-    image: momo-store-frontend:${APP_VERSION:-1.0.0}
+    image: ${DOCKER_USER}/docker-project-frontend:${APP_VERSION:-1.0.0}
     build:
       context: ./frontend
       args:
@@ -28,7 +24,7 @@ services:
     volumes:
       - frontend-html:/mnt
     ports:
-      - "80:8080"
+      - "8080:8080"
     networks:
       - momo-net
     read_only: true
@@ -42,21 +38,16 @@ services:
 
   backend:
     container_name: backend
-    image: momo-store-backend:${APP_VERSION:-1.0.0}
+    image: ${DOCKER_USER}/docker-project-backend:${APP_VERSION:-1.0.0}
     build:
       context: ./backend
     restart: unless-stopped
     environment:
       TZ: ${TZ:-UTC}
-#      APP_ENV: ${APP_ENV:-production}
-#      APP_SECRET_FILE: /run/secrets/backend_api_token
     ports:
       - "8081:8081"
     volumes:
       - data:/app/data:rw
-#    secrets:
-#      - source: backend_api_token
-#        target: backend_api_token
     networks:
       - momo-net
     read_only: true
@@ -76,7 +67,7 @@ services:
           memory: 64M
     healthcheck:
       test:
-        ["CMD", "wget", "-q", "-O", "/dev/null", "http://127.0.0.1:8081/health"]
+        [ "CMD", "wget", "-q", "-O", "/dev/null", "http://127.0.0.1:8081/health" ]
       interval: 10s
       timeout: 3s
       retries: 5

@@ -16,7 +16,6 @@ RUN NODE_OPTIONS=--openssl-legacy-provider npm run build && rm -rf node_modules
 
 # NGINX
 
-#FROM nginx:1.30.0-alpine-slim
 FROM nginxinc/nginx-unprivileged:1.30-alpine
 
 USER root
@@ -35,8 +34,6 @@ USER 101
 EXPOSE 8080
 
 HEALTHCHECK --interval=30s --timeout=3s --start-period=10s --retries=3 \
-    CMD wget -q http://127.0.0.1:8080/momo-store/ || exit 1
-# -O /dev/null
-# --no-verbose --tries=1
+    CMD wget -q -O /dev/null http://127.0.0.1:8080/momo-store/ || exit 1
 
 CMD ["nginx", "-g", "daemon off;"]
