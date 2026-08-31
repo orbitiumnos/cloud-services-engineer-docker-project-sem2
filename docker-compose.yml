@@ -13,7 +13,8 @@ volumes:
 services:
   frontend:
     container_name: frontend
-    image: ${DOCKER_USER}/docker-project-frontend:${APP_VERSION:-1.0.0}
+    #    image: ${DOCKER_USER}/docker-project-frontend:${APP_VERSION:-1.0.0}
+    image: docker-project-frontend:${APP_VERSION:-1.0.0}
     build:
       context: ./frontend
       args:
@@ -38,7 +39,8 @@ services:
 
   backend:
     container_name: backend
-    image: ${DOCKER_USER}/docker-project-backend:${APP_VERSION:-1.0.0}
+    #    image: ${DOCKER_USER}/docker-project-backend:${APP_VERSION:-1.0.0}
+    image: docker-project-backend:${APP_VERSION:-1.0.0}
     build:
       context: ./backend
     restart: unless-stopped
@@ -65,10 +67,3 @@ services:
         reservations:
           cpus: "0.04"
           memory: 64M
-    healthcheck:
-      test:
-        [ "CMD", "wget", "-q", "-O", "/dev/null", "http://127.0.0.1:8081/health" ]
-      interval: 10s
-      timeout: 3s
-      retries: 5
-      start_period: 5s
