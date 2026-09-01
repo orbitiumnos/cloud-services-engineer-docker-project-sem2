@@ -12,8 +12,8 @@ COPY package.json package-lock.json ./
 RUN npm ci
 
 COPY . .
-#RUN NODE_OPTIONS=--openssl-legacy-provider npm run build && rm -rf node_modules
-RUN npm run build
+RUN NODE_OPTIONS=--openssl-legacy-provider npm run build && rm -rf node_modules
+#RUN npm run build
 
 # NGINX
 
