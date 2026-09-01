@@ -1,4 +1,4 @@
-# golang
+# GO
 
 FROM golang:1.25-alpine AS builder
 
@@ -11,14 +11,11 @@ RUN go mod download
 
 COPY . .
 RUN go build -o /out/momo-store-api ./cmd/api
-# -trimpath -ldflags="-s -w"
-
-# linux
 
 FROM alpine:3.22
 
-#LABEL org.opencontainers.image.title="momo-store-backend" \
-#      org.opencontainers.image.description="Go API backend for momo-store"
+LABEL org.opencontainers.image.title="momo-store-backend" \
+      org.opencontainers.image.description="Go API backend for momo-store"
 
 RUN apk upgrade --no-cache \
     && addgroup -S app \
@@ -28,7 +25,7 @@ RUN apk upgrade --no-cache \
     && chown -R app:app /app
 
 WORKDIR /app
-COPY --from=builder --chown=app:app /out/momo-store-api ./momo-store-api
+COPY --from=builder --chown=app:app /out/momo-store-api /app/momo-store-api
 
 USER app
 

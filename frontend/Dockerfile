@@ -18,6 +18,9 @@ RUN NODE_OPTIONS=--openssl-legacy-provider npm run build && rm -rf node_modules
 
 FROM nginxinc/nginx-unprivileged:1.30-alpine
 
+LABEL org.opencontainers.image.title="momo-store-frontend" \
+      org.opencontainers.image.description="Vue.js frontend for momo-store served by nginx"
+
 USER root
 
 RUN apk upgrade --no-cache
