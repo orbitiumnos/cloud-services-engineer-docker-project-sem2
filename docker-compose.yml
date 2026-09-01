@@ -15,23 +15,19 @@ volumes:
 services:
   frontend:
     container_name: frontend
-    #    image: ${DOCKER_USER}/docker-project-frontend:${APP_VERSION:-1.0.0}
-    #    image: docker-project-frontend:${APP_VERSION:-1.0.0}
+    image: momo-store-frontend:1.0.0
     build:
       context: ./frontend
       args:
-        VUE_APP_API_URL: ${VUE_APP_API_URL:-/api} #-http://localhost:8081
+        VUE_APP_API_URL: /api
     restart: unless-stopped
     environment:
       TZ: ${TZ:-UTC}
     volumes:
       - frontend-html:/mnt
     ports:
-      - "8080:8080"
-    expose:
-      - "8080"
+      - "80:8080"
     networks:
-      - momo-net
       - proxy
     read_only: true
     tmpfs:
@@ -50,8 +46,7 @@ services:
 
   backend:
     container_name: backend
-    #    image: ${DOCKER_USER}/docker-project-backend:${APP_VERSION:-1.0.0}
-    #    image: docker-project-backend:${APP_VERSION:-1.0.0}
+    image: momo-store-backend:1.0.0
     build:
       context: ./backend
     restart: unless-stopped
@@ -59,12 +54,11 @@ services:
       TZ: ${TZ:-UTC}
     ports:
       - "8081:8081"
-    expose:
-      - "8081"
     volumes:
       - data:/app/data:rw
     networks:
       - momo-net
+      - proxy
     read_only: true
     cap_drop:
       - ALL
