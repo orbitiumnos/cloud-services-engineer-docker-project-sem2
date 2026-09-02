@@ -2,14 +2,15 @@
 
 Проект содержит два образа
 
-| Сервис   | Описание       | Образы                    | Размер    | Эндпоинты              |
-|----------|----------------|---------------------------|-----------|------------------------|
-| frontend | Vue.js + Nginx | momo-store-frontend:1.0.0 | ~22.5 MB  | http://localhost:8081/ |
-| backend  | Go             | momo-store-backend:1.0.0  | ~14.75 MB |                        |
+| Сервис   | Описание       | Образы                    | Размер    | Эндпоинты                    |
+|----------|----------------|---------------------------|-----------|------------------------------|
+| frontend | Vue.js + Nginx | momo-store-frontend:1.0.0 | ~22.5 MB  | http://127.0.0.1/momo-store/ |
+| backend  | Go             | momo-store-backend:1.0.0  | ~14.75 MB |                              |
 
 ## Запуск образов
 
 ```bash
+# для dev среды
 docker compose build
 
 docker compose up -d
@@ -18,9 +19,9 @@ docker compose up -d
 ## Проверка доступности сервисов
 
 ```bash
-curl http://localhost:8081/health
+curl http://127.0.0.1:8080/momo-store/
 
-curl http://localhost/
+curl http://127.0.0.1:8081/health
 ```
 
 ## Остановка сервисов
